@@ -1,7 +1,7 @@
 // Create and connect Postgress Client
-const { createNewPgClient, initPgClientConnection } = require('./pg-client');
-const pgClient = createNewPgClient();
-initPgClientConnection(pgClient);
+const { createNewPgPool, initPgClientConnection } = require('./pg-client');
+const pgPool = createNewPgPool();
+initPgClientConnection(pgPool);
 
 // Redis Client Setup
 const { createRedisClient, createRedisPublisher } = require('./redis-client');
@@ -22,7 +22,7 @@ app.get('/', (_request, response) => {
   response.send('Fibonacci-Calculator us running');
 });
 app.get('/values/all', async (_request, response) => {
-  const values  = await pgClient.query('SELECT * FROM values;');
+  const values  = await pgPool.query('SELECT * FROM values;');
   response.send(values.rows);
 });
 app.get('/values/current', async (_request, response) => {
@@ -38,7 +38,7 @@ app.post('/values', async (request, response) => {
   } else {
     redisClient.hset('values', index, 'Nothing yet!');
     redisPublisher.publish('insert', index);
-    pgClient.query('INSERT INTO values(number) VALUES($1)', [index]);
+    pgPool.query('INSERT INTO values(number) VALUES($1)', [index]);
     response.send({ calculating: true });
   }
 });

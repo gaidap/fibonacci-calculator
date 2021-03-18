@@ -3,7 +3,7 @@ const redis = require('redis');
 
 const redisClient = redis.createClient({
   host: connectionKeys.redisHost,
-  host: connectionKeys.redisPort,
+  port: connectionKeys.redisPort,
   retry_strategy: () => 1000
 });
 

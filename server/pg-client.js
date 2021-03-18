@@ -1,7 +1,7 @@
 const connectionKeys = require('./connection-keys');
 const { Pool } = require('pg');
 
-const createNewPgClient = () => {
+const createNewPgPool = () => {
   return new Pool({
     user: connectionKeys.pgUser,
     password: connectionKeys.pgPassword,
@@ -11,15 +11,15 @@ const createNewPgClient = () => {
   });
 };
 
-const initPgClientConnection = (pgClient) => {
-  pgClient.on('connect', () => {
-    pgClient
+const initPgClientConnection = (pgPool) => {
+  pgPool.on('connect', (client) => {
+    client 
       .query('CREATE TABLE IF NOT EXISTS values (number INT);')
       .catch((error) => console.log(error));
   });
 };
 
 module.exports = {
-  createNewPgClient: createNewPgClient,
+  createNewPgPool: createNewPgPool,
   initPgClientConnection: initPgClientConnection
 };
