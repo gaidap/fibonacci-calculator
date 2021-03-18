@@ -14,6 +14,7 @@ services:
       - /app/node_modules
       - ./server:/app
     environment:
+      - CHOKIDAR_USEPOLLING=true
       # default values for redis image
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -23,17 +24,20 @@ services:
       - PGHOST=postgres
       - PGPORT=5432
       - PGDATABASE=postgres
-   worker:
-     build:
-       dockerfile: Dockerfile.dev
-       context: ./worker
-     volumes:
+  worker:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./worker
+    volumes:
       - /app/node_modules
       - ./worker:/app
-     environment:
+    environment:
+      - CHOKIDAR_USEPOLLING=true
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-   client:
+  client:
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     stdin_open: true
     build:
       dockerfile: Dockerfile.dev
