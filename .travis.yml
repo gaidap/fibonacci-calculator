@@ -1,0 +1,19 @@
+language: generic
+sudo: required
+services:
+  - docker
+before_install:
+  - docker build -t pgaida/react-test -f ./client/Dockerfile.dev ./client
+script:
+  - docker run -e CI=true pgaida/react-test npm test
+after_success:
+  - docker build -t pgaida/fib-client ./client
+  - docker build -t pgaida/fib-nginx ./nginx
+  - docker build -t pgaida/fib-server ./server
+  - docker build -t pgaida/fib-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push pgaida/fib-client
+  - docker push pgaida/fib-nginx
+  - docker push pgaida/fib-server
+  - docker push pgaida/fib-worker
+  
