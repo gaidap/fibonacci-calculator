@@ -16,15 +16,15 @@ after_success:
   - docker push pgaida/fib-nginx
   - docker push pgaida/fib-server
   - docker push pgaida/fib-worker
-deploy:
-  provider: elasticbeanstalk
-  region: eu-central-1
-  app: fib-calculator
-  env: Fibcalculator-env
-  bucket_name: elasticbeanstalk-eu-central-1-617853604502
-  bucket_path: fibonacci-calculator
-  on:
-    branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+# deploy:
+#   provider: elasticbeanstalk
+#   region: eu-central-1
+#   app: fib-calculator
+#   env: Fibcalculator-env
+#   bucket_name: elasticbeanstalk-eu-central-1-617853604502
+#   bucket_path: fibonacci-calculator
+#   on:
+#     branch: master
+#   access_key_id: $AWS_ACCESS_KEY
+#   secret_access_key: $AWS_SECRET_KEY
   
