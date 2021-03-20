@@ -1,0 +1,39 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "fib-client", 
+      "image": "pgaida/fib-client",
+      "hostname": "client",
+      "essential": false
+    },
+    {
+      "name": "fib-nginx", 
+      "image": "pgaida/fib-nginx",
+      "hostname": "nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": [
+        "fib-client",
+        "fib-server"
+      ]
+    },
+    {
+      "name": "fib-server", 
+      "image": "pgaida/fib-server",
+      "hostname": "api",
+      "essential": false
+    },
+    {
+      "name": "fib-worker", 
+      "image": "pgaida/fib-worker",
+      "hostname": "worker",
+      "essential": false
+    }
+  ]
+}
