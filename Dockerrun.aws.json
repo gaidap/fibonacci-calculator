@@ -5,13 +5,15 @@
       "name": "fib-client", 
       "image": "pgaida/fib-client",
       "hostname": "client",
-      "essential": false
+      "essential": false,
+      "memory": 128
     },
     {
       "name": "fib-nginx", 
       "image": "pgaida/fib-nginx",
       "hostname": "nginx",
       "essential": true,
+      "memory": 128,
       "portMappings": [
         {
           "hostPort": 80,
@@ -27,13 +29,15 @@
       "name": "fib-server", 
       "image": "pgaida/fib-server",
       "hostname": "api",
-      "essential": false
+      "essential": false,
+      "memory": 128
     },
     {
       "name": "fib-worker", 
       "image": "pgaida/fib-worker",
       "hostname": "worker",
-      "essential": false
+      "essential": false,
+      "memory": 128
     }
   ]
 }
